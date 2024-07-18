@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -36,14 +38,14 @@ import com.lizaworks.notetakingapp.R
 import com.lizaworks.notetakingapp.ui.theme.NoteTakingAppTheme
 
 @Composable
-fun TypeNote() {
+fun TypeNoteScreen(onBackClicked: ()->Unit) {
     Column(
         modifier = Modifier
             .padding(vertical = 42.dp, horizontal = 16.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        TopAppBar()
+        TopAppBar(onBackClicked = onBackClicked)
         NoteArea()
     }
 }
@@ -109,15 +111,17 @@ private fun NoteArea() {
 }
 
 @Composable
-private fun TopAppBar() {
+private fun TopAppBar(onBackClicked: ()->Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.arrow_left),
-            contentDescription = "arrow left"
-        )
+        IconButton(onClick =  onBackClicked) {
+            Icon(
+                painter = painterResource(id = R.drawable.arrow_left),
+                contentDescription = "arrow left"
+            )
+        }
         Text("Back")
         Spacer(modifier = Modifier.weight(1f))
         Image(
@@ -151,6 +155,6 @@ private fun SaveButton(enabled: Boolean, onClicked: () -> Unit) {
 @Composable
 fun TypeNotePreview() {
     NoteTakingAppTheme {
-        TypeNote()
+        TypeNoteScreen(onBackClicked = {})
     }
 }

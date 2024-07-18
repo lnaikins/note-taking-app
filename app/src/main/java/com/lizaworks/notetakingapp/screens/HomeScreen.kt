@@ -2,6 +2,7 @@ package com.lizaworks.notetakingapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,7 @@ import com.lizaworks.notetakingapp.R
 import com.lizaworks.notetakingapp.ui.theme.NoteTakingAppTheme
 
 @Composable
-fun Homepage() {
+fun Homepage(openTypeNoteScreen:()->Unit) {
     Column(
         modifier = Modifier
             .padding(vertical = 42.dp, horizontal = 8.dp)
@@ -43,12 +44,12 @@ fun Homepage() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         AppTitle()
-        StaggeredGrid(modifier = Modifier.weight(1f))
+        StaggeredGrid(modifier = Modifier.weight(1f), openTypeNoteScreen = openTypeNoteScreen)
     }
 }
 
 @Composable
-private fun StaggeredGrid(modifier: Modifier) {
+private fun StaggeredGrid(modifier: Modifier, openTypeNoteScreen: () -> Unit) {
     LazyVerticalStaggeredGrid(
         modifier = modifier,
         columns = StaggeredGridCells.Fixed(2),
@@ -98,6 +99,7 @@ private fun StaggeredGrid(modifier: Modifier) {
         item {
             Column(
                 modifier = Modifier
+                    .clickable(onClick = openTypeNoteScreen)
                     .background(
                         color = Color(0xFFB9E6FE),
                         shape = RoundedCornerShape(8.dp)
@@ -173,7 +175,7 @@ fun NoteItem(note: Note, modifier: Modifier) {
 @Composable
 fun HomepagePreview() {
     NoteTakingAppTheme {
-        Homepage()
+        Homepage(openTypeNoteScreen = {})
     }
 }
 

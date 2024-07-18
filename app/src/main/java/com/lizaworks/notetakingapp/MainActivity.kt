@@ -6,10 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.lizaworks.notetakingapp.screens.Homepage
-import com.lizaworks.notetakingapp.screens.TypeNote
+import com.lizaworks.notetakingapp.screens.TypeNoteScreen
 import com.lizaworks.notetakingapp.ui.theme.NoteTakingAppTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+object Home
+
+@Serializable
+object TypeNote
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,12 +28,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NoteTakingAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Homepage()
-                    TypeNote()
-                }
+                MainContent()
             }
         }
+    }
+
+    @Composable
+    fun MainContent() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = Home) {
+            composable<Home> { Homepage(openTypeNoteScreen = { navController.navigate(route = TypeNote) }) }
+            composable<TypeNote> { TypeNoteScreen(onBackClicked = { navController.popBackStack() }) }
+        }
+
     }
 }
 
