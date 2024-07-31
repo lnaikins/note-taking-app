@@ -1,7 +1,7 @@
 # Note.d
 
 Note.d is an android app that allows you to take notes built
-with Jetpack Compose
+with Jetpack Compose.
 
 ## Prerequisite
 
