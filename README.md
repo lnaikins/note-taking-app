@@ -16,7 +16,7 @@ To build this project you require:
 - [Jetpack Compose](https://developer.android.com/develop/ui/compose): Android's modern UI Toolkit
 - [Kotlinx Serialization](https://kotlinlang.org/docs/serialization.html): Cross platform framework
   for data serialization.
--[Room database](): Library that provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
+- [Room database](https://developer.android.com/training/data-storage/room): Library that provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
 - [Hilt](https://dagger.dev/hilt/): Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.
 # Screenshots
 
