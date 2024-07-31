@@ -34,11 +34,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.lizaworks.notetakingapp.R
 import com.lizaworks.notetakingapp.ui.theme.NoteTakingAppTheme
+import com.lizaworks.notetakingapp.viewmodels.TypeNoteViewModel
 
 @Composable
-fun TypeNoteScreen(onBackClicked: ()->Unit) {
+fun TypeNoteScreen(onBackClicked: () -> Unit) {
+    val viewModel: TypeNoteViewModel = hiltViewModel()
     Column(
         modifier = Modifier
             .padding(vertical = 42.dp, horizontal = 16.dp)
@@ -46,13 +49,18 @@ fun TypeNoteScreen(onBackClicked: ()->Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         TopAppBar(onBackClicked = onBackClicked)
-        NoteArea()
+        NoteArea(
+            onSaveClicked = { title, content ->
+                viewModel.saveNote(title, content)
+                onBackClicked()
+            },
+        )
     }
 }
 
 
 @Composable
-private fun NoteArea() {
+private fun NoteArea(onSaveClicked: (String, String) -> Unit) {
     var title by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
     Column {
@@ -102,21 +110,21 @@ private fun NoteArea() {
                     painter = painterResource(id = R.drawable.darkmode_icon),
                     contentDescription = "dark mode"
                 )
-                SaveButton(enabled = title.isNotEmpty() && text.isNotEmpty()) {
-
-                }
+                SaveButton(
+                    enabled = title.isNotEmpty() && text.isNotEmpty(),
+                    onClicked = { onSaveClicked(title, text) })
             }
         }
     }
 }
 
 @Composable
-private fun TopAppBar(onBackClicked: ()->Unit) {
+private fun TopAppBar(onBackClicked: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(24.dp),
     ) {
-        IconButton(onClick =  onBackClicked) {
+        IconButton(onClick = onBackClicked) {
             Icon(
                 painter = painterResource(id = R.drawable.arrow_left),
                 contentDescription = "arrow left"

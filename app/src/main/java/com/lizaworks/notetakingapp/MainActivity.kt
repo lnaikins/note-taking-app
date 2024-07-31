@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.lizaworks.notetakingapp.screens.Homepage
 import com.lizaworks.notetakingapp.screens.TypeNoteScreen
 import com.lizaworks.notetakingapp.ui.theme.NoteTakingAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,6 +23,7 @@ object Home
 @Serializable
 object TypeNote
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,6 @@ class MainActivity : ComponentActivity() {
             composable<Home> { Homepage(openTypeNoteScreen = { navController.navigate(route = TypeNote) }) }
             composable<TypeNote> { TypeNoteScreen(onBackClicked = { navController.popBackStack() }) }
         }
-
     }
 }
 

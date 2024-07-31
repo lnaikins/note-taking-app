@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("plugin.serialization") version "2.0.0"
+
+    id("com.google.devtools.ksp") version "2.0.0-1.0.23"
+
+    id("com.google.dagger.hilt.android")
+
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 android {
@@ -37,12 +43,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -70,6 +70,22 @@ dependencies {
 
 
 
-    implementation("androidx.navigation:navigation-compose:2.8.0-alpha08")
+    implementation("androidx.navigation:navigation-compose:2.8.0-beta05")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    ksp("com.google.dagger:hilt-compiler:2.51.1")
+
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
+
 }
